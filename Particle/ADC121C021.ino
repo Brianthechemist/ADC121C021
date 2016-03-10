@@ -14,23 +14,24 @@ int raw_adc = 0;
 void setup()
 { 
     // Set variable
-    Particle.vasriable("i2cdevice", "ADC121C021");
+    Particle.variable("i2cdevice", "ADC121C021");
     Particle.variable("rawADC", raw_adc);
     
-    // Initialize I2C communication as MASTER
+    // Initialise I2C communication as MASTER
     Wire.begin();
-    // Initialize serial communication, set baud rate = 9600
+    // Initialise serial communication, set baud rate = 9600
     Serial.begin(9600);
     delay(300);
 }
 
 void loop() 
 {
-    // Begin transmission with given device on I2C bus
+    unsigned int data[2];
+    // Start I2C transmission
     Wire.beginTransmission(Addr); 
     // Calling conversion result register, 0x00(0)
     Wire.write(0x00);
-    // Stop I2C transmission on the device
+    // Stop I2C transmission
     Wire.endTransmission();
 
     // Request 2 bytes
@@ -39,16 +40,16 @@ void loop()
     // Read 2 bytes of data, raw_adc msb, raw_adc lsb
     if(Wire.available() == 2)
     {  
-        int MSB = Wire.read();
-        int LSB = Wire.read();
+        data[0] = Wire.read();
+        data[1] = Wire.read();
     
-        delay(300);
+    delay(300);
     
-        // Convert the data to 12 bits
-        raw_adc = ((MSB * 256) + LSB) & 0x0FFF;
+    // Convert the data to 12 bits
+    raw_adc = ((data[0] * 256) + data[1]) & 0x0FFF;
 
-        // Output data to dashboard
-        Particle.publish("Raw Value of the source is : ", String(raw_adc));
+    // Output data to dashboard
+    Particle.publish("Raw Value of the source is : ", String(raw_adc));
     }
 }
 
