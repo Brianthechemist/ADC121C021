@@ -49,7 +49,7 @@ void loop()
     raw_adc = ((data[0] * 256) + data[1]) & 0x0FFF;
 
     // Output data to dashboard
-    Particle.publish("Raw Value of the source is : ", String(raw_adc));
+    Particle.publish("Digital value of analog input: ", String(raw_adc));
     }
 }
 
