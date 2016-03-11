@@ -39,7 +39,7 @@ void loop()
     data[1] = Wire.read();
     
     delay(300);
-    // Converting the data to 12 bits
+    // Convert the data to 12 bits
     int raw_adc = (data[0] & 0x0F) * 256) + data[1];
     
     // Output data to serial monitor
