@@ -38,12 +38,11 @@ void loop()
     data[0] = Wire.read();
     data[1] = Wire.read();
   }
-    delay(300);
-    // Convert the data to 12 bits
-    int raw_adc = ((data[0] & 0x0F) * 256) + data[1];
+  delay(300);
+  // Convert the data to 12 bits
+  int raw_adc = ((data[0] & 0x0F) * 256) + data[1];
   
-    // Output data to serial monitor
-    Serial.print("Digital value of analog input: ");
-    Serial.println(raw_adc);
-    
+  // Output data to serial monitor
+  Serial.print("Digital value of Analog Input: ");
+  Serial.println(raw_adc);
 }
